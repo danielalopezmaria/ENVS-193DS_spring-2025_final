@@ -1,6 +1,7 @@
 ---
 title: "Final_ES193DS"
 author: "Daniela Lopez"
+date: 11-06-25
 format: html
 editor: visual
 output: 
@@ -20,7 +21,7 @@ library(MuMIn)
 library(scales)
 ```
 
-## Problem 1 
+## Problem 1
 
 #### a. transparent statistical methods
 
@@ -40,28 +41,42 @@ biological : For part 2, The nitrogen load averages were very different among ni
 
 statistical: one way ANOVA, F(), p= 0.02, α = 0.05, and df()
 
-## Problem 2 
+## Problem 2
 
 #### a. Cleaning and summarizing
 
 ```{r}
-stt_clean <- read_csv("data/sstdata.csv") |> 
+sst_clean <- read_csv("data/sstdata.csv") |> #load data and rename
   mutate(data= ymd(date)) |>
   mutate(year= year(data),
-         month = month(data))
+         month = month(data, label = TRUE)) |> 
+  filter(year >= 2018, year <= 2023) |>#only keeps rows between those years
+group_by(site, year, month) |> 
+  summarise( 
+    mean_monthly_sst = mean(temp, na.rm = TRUE))|> 
+  mutate(month= factor (month, ordered= TRUE))
+
+sst_clean |> 
+  slice_sample(n=5) #get 5 random rows
+
+
 ```
 
-#### b.  Visualize the data
+#### b. Visualize the data
 
-## Problem 3 
+## Problem 3
 
 #### a. Response variable
 
+In this data set, a 1 represents a swift parrot in the nest box while a 0 represents absence of swift parrot in nest box.
+
 #### b. Purpose of study
+
+Swift parrots are a threatened species in this study while the other two species are considered invasive. The study uses the absence of the swift parrot to tell if the habitat restoration is working.
 
 #### c. Difference in "seasons"
 
-#### d. Table of models 
+#### d. Table of models
 
 #### e. Run the models
 
@@ -77,6 +92,8 @@ stt_clean <- read_csv("data/sstdata.csv") |>
 
 #### k. Interpret results
 
-## Problem 4 
+## Problem 4
 
-#### a. Comparing Visualizations 
+#### a. Comparing Visualizations
+
+The visualizations were extremely different from each other. My exploratory visualization was almost like a non-linear step function with yes work day on the right and non-work day on the left with the ounces of water consumed on the y-axis. My affective visualization was a graph over time on my water intake and the sharp turns were non work days compared to work days. The similarities seen on my visuals were the water intake ounces on the y-axis and both graphs. Both visualizations show me drinking a lot more water while I am at work. During workshop nine I was told my visual wasn't as clear but I was not sure how to change it. I made a box plot which I liked a lot more but the graph over time seemed to have a better fit although I was also told they had a hard time figuring out which was non work days vs work days in workshop 10.
