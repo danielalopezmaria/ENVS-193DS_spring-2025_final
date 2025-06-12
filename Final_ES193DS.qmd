@@ -1,0 +1,37 @@
+---
+title: "Final_ES193DS"
+author: "Daniela Lopez"
+format: html
+editor: visual
+output: 
+  html_document: 
+    toc: true
+    toc_float: true
+---
+
+```{r}
+library(tidyverse)
+library(janitor)
+library(here)
+library(ggeffects)
+library(flextable)
+library(readxl)
+library(MuMIn)
+library(scales)
+```
+
+## Problem 1 
+
+#### a. transparent statistical methods
+
+In part 1, they used Pearson's correlation as they were measuring the strength and directions of the two variables being distance from headwater and total nitrogen load. In part 2, they used ANOVA as they determined that there is no difference in the means of two or more groups, those being urban land, atmospheric deposition, fertilizer, wastewater treatment, and grassland.
+
+#### b. more information needed
+
+#### c. suggestions for rewritting
+
+## Problem 2 
+
+## Problem 3 
+
+## Problem 4 
