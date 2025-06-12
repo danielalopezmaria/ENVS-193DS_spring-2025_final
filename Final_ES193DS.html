@@ -7,6 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Daniela Lopez">
+<meta name="dcterms.date" content="2025-11-06">
 
 <title>Final_ES193DS</title>
 <style>
@@ -94,6 +95,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           </div>
   </div>
     
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">November 6, 2025</p>
+    </div>
+  </div>
   
     
   </div>
@@ -179,10 +186,15 @@ The following object is masked from 'package:readr':
 <section id="a.-cleaning-and-summarizing" class="level4">
 <h4 class="anchored" data-anchor-id="a.-cleaning-and-summarizing">a. Cleaning and summarizing</h4>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>stt_clean <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/sstdata.csv"</span>) <span class="sc">|&gt;</span> </span>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>sst_clean <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/sstdata.csv"</span>) <span class="sc">|&gt;</span> <span class="co">#load data and rename</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">data=</span> <span class="fu">ymd</span>(date)) <span class="sc">|&gt;</span></span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">year=</span> <span class="fu">year</span>(data),</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">month =</span> <span class="fu">month</span>(data))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">month =</span> <span class="fu">month</span>(data, <span class="at">label =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(year <span class="sc">&gt;=</span> <span class="dv">2018</span>, year <span class="sc">&lt;=</span> <span class="dv">2023</span>) <span class="sc">|&gt;</span><span class="co">#only keeps rows between those years</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="fu">group_by</span>(site, year, month) <span class="sc">|&gt;</span> </span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>( </span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">mean_monthly_sst =</span> <span class="fu">mean</span>(temp, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))<span class="sc">|&gt;</span> </span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">month=</span> <span class="fu">factor</span> (month, <span class="at">ordered=</span> <span class="cn">TRUE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Rows: 291384 Columns: 5
 ── Column specification ────────────────────────────────────────────────────────
@@ -192,7 +204,27 @@ dbl  (3): latitude, longitude, temp
 date (1): date
 
 ℹ Use `spec()` to retrieve the full column specification for this data.
-ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
+`summarise()` has grouped output by 'site', 'year'. You can override using the `.groups` argument.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>sst_clean <span class="sc">|&gt;</span> </span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_sample</span>(<span class="at">n=</span><span class="dv">5</span>) <span class="co">#get 5 random rows</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 570 × 4
+# Groups:   site, year [114]
+   site   year month mean_monthly_sst
+   &lt;chr&gt; &lt;dbl&gt; &lt;ord&gt;            &lt;dbl&gt;
+ 1 SITE1  2018 Mar               13.7
+ 2 SITE1  2018 Aug               17.6
+ 3 SITE1  2018 Oct               17.7
+ 4 SITE1  2018 Apr               13.0
+ 5 SITE1  2018 Dec               15.5
+ 6 SITE1  2019 Dec               14.8
+ 7 SITE1  2019 Sep               17.5
+ 8 SITE1  2019 Mar               13.6
+ 9 SITE1  2019 May               14.4
+10 SITE1  2019 Apr               13.8
+# ℹ 560 more rows</code></pre>
 </div>
 </div>
 </section>
@@ -204,9 +236,11 @@ date (1): date
 <h2 class="anchored" data-anchor-id="problem-3">Problem 3</h2>
 <section id="a.-response-variable" class="level4">
 <h4 class="anchored" data-anchor-id="a.-response-variable">a. Response variable</h4>
+<p>In this data set, a 1 represents a swift parrot in the nest box while a 0 represents absence of swift parrot in nest box.</p>
 </section>
 <section id="b.-purpose-of-study" class="level4">
 <h4 class="anchored" data-anchor-id="b.-purpose-of-study">b. Purpose of study</h4>
+<p>Swift parrots are a threatened species in this study while the other two species are considered invasive. The study uses the absence of the swift parrot to tell if the habitat restoration is working.</p>
 </section>
 <section id="c.-difference-in-seasons" class="level4">
 <h4 class="anchored" data-anchor-id="c.-difference-in-seasons">c.&nbsp;Difference in “seasons”</h4>
@@ -240,6 +274,7 @@ date (1): date
 <h2 class="anchored" data-anchor-id="problem-4">Problem 4</h2>
 <section id="a.-comparing-visualizations" class="level4">
 <h4 class="anchored" data-anchor-id="a.-comparing-visualizations">a. Comparing Visualizations</h4>
+<p>The visualizations were extremely different from each other. My exploratory visualization was almost like a non-linear step function with yes work day on the right and non-work day on the left with the ounces of water consumed on the y-axis. My affective visualization was a graph over time on my water intake and the sharp turns were non work days compared to work days. The similarities seen on my visuals were the water intake ounces on the y-axis and both graphs. Both visualizations show me drinking a lot more water while I am at work. During workshop nine I was told my visual wasn’t as clear but I was not sure how to change it. I made a box plot which I liked a lot more but the graph over time seemed to have a better fit although I was also told they had a hard time figuring out which was non work days vs work days in workshop 10.</p>
 </section>
 </section>
 
