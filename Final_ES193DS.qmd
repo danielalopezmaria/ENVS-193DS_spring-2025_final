@@ -44,6 +44,13 @@ statistical: one way ANOVA, F(), p= 0.02, α = 0.05, and df()
 
 #### a. Cleaning and summarizing
 
+```{r}
+stt_clean <- read_csv("data/sstdata.csv") |> 
+  mutate(data= ymd(date)) |>
+  mutate(year= year(data),
+         month = month(data))
+```
+
 #### b.  Visualize the data
 
 ## Problem 3 
