@@ -162,6 +162,10 @@ The following object is masked from 'package:readr':
 
     col_factor</code></pre>
 </div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DHARMa)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>This is DHARMa 0.4.7. For overview type '?DHARMa'. For recent changes, type news(package = 'DHARMa')</code></pre>
+</div>
 </div>
 <section id="problem-1" class="level2">
 <h2 class="anchored" data-anchor-id="problem-1">Problem 1</h2>
@@ -186,15 +190,15 @@ The following object is masked from 'package:readr':
 <section id="a.-cleaning-and-summarizing" class="level4">
 <h4 class="anchored" data-anchor-id="a.-cleaning-and-summarizing">a. Cleaning and summarizing</h4>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>sst_clean <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/sstdata.csv"</span>) <span class="sc">|&gt;</span> <span class="co">#load data and rename</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">data=</span> <span class="fu">ymd</span>(date)) <span class="sc">|&gt;</span></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">year=</span> <span class="fu">year</span>(data),</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">month =</span> <span class="fu">month</span>(data, <span class="at">label =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span> </span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(year <span class="sc">&gt;=</span> <span class="dv">2018</span>, year <span class="sc">&lt;=</span> <span class="dv">2023</span>) <span class="sc">|&gt;</span><span class="co">#only keeps rows between those years</span></span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="fu">group_by</span>(site, year, month) <span class="sc">|&gt;</span> </span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>( </span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">mean_monthly_sst =</span> <span class="fu">mean</span>(temp, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))<span class="sc">|&gt;</span> </span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">month=</span> <span class="fu">factor</span> (month, <span class="at">ordered=</span> <span class="cn">TRUE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>sst_clean <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/sstdata.csv"</span>) <span class="sc">|&gt;</span> <span class="co">#load data and rename</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">data=</span> <span class="fu">ymd</span>(date)) <span class="sc">|&gt;</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">year=</span> <span class="fu">year</span>(data),</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">month =</span> <span class="fu">month</span>(data, <span class="at">label =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(year <span class="sc">&gt;=</span> <span class="dv">2018</span>, year <span class="sc">&lt;=</span> <span class="dv">2023</span>) <span class="sc">|&gt;</span><span class="co">#only keeps rows between those years</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="fu">group_by</span>(site, year, month) <span class="sc">|&gt;</span> </span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>( </span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">mean_monthly_sst =</span> <span class="fu">mean</span>(temp, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))<span class="sc">|&gt;</span> </span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">month=</span> <span class="fu">factor</span> (month, <span class="at">ordered=</span> <span class="cn">TRUE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Rows: 291384 Columns: 5
 ── Column specification ────────────────────────────────────────────────────────
@@ -207,23 +211,23 @@ date (1): date
 ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
 `summarise()` has grouped output by 'site', 'year'. You can override using the `.groups` argument.</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>sst_clean <span class="sc">|&gt;</span> </span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_sample</span>(<span class="at">n=</span><span class="dv">5</span>) <span class="co">#get 5 random rows</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>sst_clean <span class="sc">|&gt;</span> </span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_sample</span>(<span class="at">n=</span><span class="dv">5</span>) <span class="co">#get 5 random rows</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 570 × 4
 # Groups:   site, year [114]
    site   year month mean_monthly_sst
    &lt;chr&gt; &lt;dbl&gt; &lt;ord&gt;            &lt;dbl&gt;
- 1 SITE1  2018 Mar               13.7
- 2 SITE1  2018 Dec               15.5
- 3 SITE1  2018 Aug               17.6
- 4 SITE1  2018 Jul               16.6
- 5 SITE1  2018 Apr               13.0
- 6 SITE1  2019 Aug               16.1
- 7 SITE1  2019 Jun               15.2
- 8 SITE1  2019 Oct               15.9
+ 1 SITE1  2018 Jan               14.5
+ 2 SITE1  2018 Nov               17.2
+ 3 SITE1  2018 Jul               16.6
+ 4 SITE1  2018 Oct               17.7
+ 5 SITE1  2018 Dec               15.5
+ 6 SITE1  2019 Nov               16.0
+ 7 SITE1  2019 Dec               14.8
+ 8 SITE1  2019 Feb               14.0
  9 SITE1  2019 Jan               14.3
-10 SITE1  2019 Sep               17.5
+10 SITE1  2019 Oct               15.9
 # ℹ 560 more rows</code></pre>
 </div>
 </div>
@@ -249,19 +253,60 @@ date (1): date
 <section id="d.-table-of-models" class="level4">
 <h4 class="anchored" data-anchor-id="d.-table-of-models">d.&nbsp;Table of models</h4>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>occ <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"occdist.csv"</span>) <span class="sc">|&gt;</span><span class="co">#load data</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rename_with</span>(make.names) <span class="sc">|&gt;</span>  </span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="fu">mutate</span>(<span class="at">season =</span> <span class="fu">as.factor</span>(season))     <span class="co"># Make season a factor</span></span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit the models</span></span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>model1 <span class="ot">&lt;-</span> <span class="fu">glm</span>(sp <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data =</span> occ, <span class="at">family =</span> binomial)                        <span class="co"># Null model</span></span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>model2 <span class="ot">&lt;-</span> <span class="fu">glm</span>(sp <span class="sc">~</span> season <span class="sc">+</span> edge.distance, <span class="at">data =</span> occ, <span class="at">family =</span> binomial)  <span class="co"># Full model</span></span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>model3 <span class="ot">&lt;-</span> <span class="fu">glm</span>(sp <span class="sc">~</span> season, <span class="at">data =</span> occ, <span class="at">family =</span> binomial)                  <span class="co">#only season</span></span>
-<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>model4 <span class="ot">&lt;-</span> <span class="fu">glm</span>(sp <span class="sc">~</span> edge.distance, <span class="at">data =</span> occ, <span class="at">family =</span> binomial)           <span class="co"># only distance </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>occ <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"occdist.csv"</span>) <span class="sc">|&gt;</span><span class="co">#load data</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rename_with</span>(make.names) <span class="sc">|&gt;</span>  </span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="fu">mutate</span>(<span class="at">season =</span> <span class="fu">as.factor</span>(season))     <span class="co"># Make season a factor</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit the models</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>model1 <span class="ot">&lt;-</span> <span class="fu">glm</span>(sp <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data =</span> occ, <span class="at">family =</span> binomial)                        <span class="co"># Null model</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>model2 <span class="ot">&lt;-</span> <span class="fu">glm</span>(sp <span class="sc">~</span> season <span class="sc">+</span> edge.distance, <span class="at">data =</span> occ, <span class="at">family =</span> binomial)  <span class="co"># Full model</span></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>model3 <span class="ot">&lt;-</span> <span class="fu">glm</span>(sp <span class="sc">~</span> season, <span class="at">data =</span> occ, <span class="at">family =</span> binomial)                  <span class="co">#only season</span></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>model4 <span class="ot">&lt;-</span> <span class="fu">glm</span>(sp <span class="sc">~</span> edge.distance, <span class="at">data =</span> occ, <span class="at">family =</span> binomial)           <span class="co"># only distance </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="e.-run-the-models" class="level4">
 <h4 class="anchored" data-anchor-id="e.-run-the-models">e. Run the models</h4>
+<ol type="1">
+<li></li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">simulateResiduals</span>(model1) <span class="sc">|&gt;</span> <span class="fu">plot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Final_ES193DS_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">simulateResiduals</span>(model2) <span class="sc">|&gt;</span> <span class="fu">plot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Final_ES193DS_files/figure-html/unnamed-chunk-4-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">simulateResiduals</span>(model3) <span class="sc">|&gt;</span> <span class="fu">plot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Final_ES193DS_files/figure-html/unnamed-chunk-4-3.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">simulateResiduals</span>(model4) <span class="sc">|&gt;</span> <span class="fu">plot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in newton(lsp = lsp, X = G$X, y = G$y, Eb = G$Eb, UrS = G$UrS, L = G$L,
+: Fitting terminated with step failure - check results carefully</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Final_ES193DS_files/figure-html/unnamed-chunk-4-4.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
 </section>
 <section id="f.-check-the-diagnostics" class="level4">
 <h4 class="anchored" data-anchor-id="f.-check-the-diagnostics">f.&nbsp;Check the diagnostics</h4>
