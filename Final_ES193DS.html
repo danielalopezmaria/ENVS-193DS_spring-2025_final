@@ -215,15 +215,15 @@ date (1): date
    site   year month mean_monthly_sst
    &lt;chr&gt; &lt;dbl&gt; &lt;ord&gt;            &lt;dbl&gt;
  1 SITE1  2018 Mar               13.7
- 2 SITE1  2018 Aug               17.6
- 3 SITE1  2018 Oct               17.7
- 4 SITE1  2018 Apr               13.0
- 5 SITE1  2018 Dec               15.5
- 6 SITE1  2019 Dec               14.8
- 7 SITE1  2019 Sep               17.5
- 8 SITE1  2019 Mar               13.6
- 9 SITE1  2019 May               14.4
-10 SITE1  2019 Apr               13.8
+ 2 SITE1  2018 Dec               15.5
+ 3 SITE1  2018 Aug               17.6
+ 4 SITE1  2018 Jul               16.6
+ 5 SITE1  2018 Apr               13.0
+ 6 SITE1  2019 Aug               16.1
+ 7 SITE1  2019 Jun               15.2
+ 8 SITE1  2019 Oct               15.9
+ 9 SITE1  2019 Jan               14.3
+10 SITE1  2019 Sep               17.5
 # ℹ 560 more rows</code></pre>
 </div>
 </div>
@@ -244,9 +244,21 @@ date (1): date
 </section>
 <section id="c.-difference-in-seasons" class="level4">
 <h4 class="anchored" data-anchor-id="c.-difference-in-seasons">c.&nbsp;Difference in “seasons”</h4>
+<p>The study represents data from the summer breeding “seasons” of 2016 and 2019. These summers were when swift birds bred and during the interval, parrots were absent.</p>
 </section>
 <section id="d.-table-of-models" class="level4">
 <h4 class="anchored" data-anchor-id="d.-table-of-models">d.&nbsp;Table of models</h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>occ <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"occdist.csv"</span>) <span class="sc">|&gt;</span><span class="co">#load data</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rename_with</span>(make.names) <span class="sc">|&gt;</span>  </span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="fu">mutate</span>(<span class="at">season =</span> <span class="fu">as.factor</span>(season))     <span class="co"># Make season a factor</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit the models</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>model1 <span class="ot">&lt;-</span> <span class="fu">glm</span>(sp <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data =</span> occ, <span class="at">family =</span> binomial)                        <span class="co"># Null model</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>model2 <span class="ot">&lt;-</span> <span class="fu">glm</span>(sp <span class="sc">~</span> season <span class="sc">+</span> edge.distance, <span class="at">data =</span> occ, <span class="at">family =</span> binomial)  <span class="co"># Full model</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>model3 <span class="ot">&lt;-</span> <span class="fu">glm</span>(sp <span class="sc">~</span> season, <span class="at">data =</span> occ, <span class="at">family =</span> binomial)                  <span class="co">#only season</span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>model4 <span class="ot">&lt;-</span> <span class="fu">glm</span>(sp <span class="sc">~</span> edge.distance, <span class="at">data =</span> occ, <span class="at">family =</span> binomial)           <span class="co"># only distance </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 </section>
 <section id="e.-run-the-models" class="level4">
 <h4 class="anchored" data-anchor-id="e.-run-the-models">e. Run the models</h4>

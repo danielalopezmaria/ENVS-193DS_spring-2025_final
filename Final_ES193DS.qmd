@@ -76,7 +76,22 @@ Swift parrots are a threatened species in this study while the other two species
 
 #### c. Difference in "seasons"
 
+The study represents data from the summer breeding "seasons " of 2016 and 2019. These summers were when swift birds bred and during the interval, parrots were absent.
+
 #### d. Table of models
+
+```{r}
+occ <- read.csv("occdist.csv") |>#load data
+rename_with(make.names) |>  
+mutate(season = as.factor(season))     # Make season a factor
+
+# Fit the models
+model1 <- glm(sp ~ 1, data = occ, family = binomial)                        # Null model
+model2 <- glm(sp ~ season + edge.distance, data = occ, family = binomial)  # Full model
+model3 <- glm(sp ~ season, data = occ, family = binomial)                  #only season
+model4 <- glm(sp ~ edge.distance, data = occ, family = binomial)           # only distance 
+
+```
 
 #### e. Run the models
 
