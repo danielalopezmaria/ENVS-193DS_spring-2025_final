@@ -19,6 +19,8 @@ library(flextable)
 library(readxl)
 library(MuMIn)
 library(scales)
+library(DHARMa)
+
 ```
 
 ## Problem 1
@@ -94,6 +96,19 @@ model4 <- glm(sp ~ edge.distance, data = occ, family = binomial)           # onl
 ```
 
 #### e. Run the models
+
+1.  
+
+```{r}
+
+simulateResiduals(model1) |> plot()
+
+simulateResiduals(model2) |> plot()
+
+simulateResiduals(model3) |> plot()
+
+simulateResiduals(model4) |> plot()
+```
 
 #### f. Check the diagnostics
 
